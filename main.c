@@ -6,9 +6,9 @@
 #include "output_f.h"
 
 #define INI_INF 10
-#define SAMPLES 1000
-#define LINES 1000
-#define COLUMNS 1000
+#define SAMPLES 100
+#define LINES 100
+#define COLUMNS 100
 #define TIMESTEPS 16364
 #define max(a,b) (((a) > (b)) ? (a) : (b))
 
@@ -19,7 +19,7 @@ int main (void) {
 	dyn_pop_file_path  = (char*) malloc(64*sizeof(char));
 	inf_rate_file_path = (char*) malloc(64*sizeof(char));
 	sprintf(dyn_pop_file_path,  "Resultsd/%dx%dx%d_Population_dynamics.csv", LINES, COLUMNS, SAMPLES);
-	sprintf(inf_rate_file_path, "Resultsd%dx%dx%d_Infection_rate.csv"     , LINES, COLUMNS, SAMPLES);
+	sprintf(inf_rate_file_path, "Resultsd/%dx%dx%d_Infection_rate.csv"     , LINES, COLUMNS, SAMPLES);
 	out_files output = create_output(dyn_pop_file_path, inf_rate_file_path);
 	free(dyn_pop_file_path);
 	free(inf_rate_file_path);
