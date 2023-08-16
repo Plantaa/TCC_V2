@@ -1,6 +1,7 @@
+#include <limits.h>
+#include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 
 #include "board.h"
 #include "random.h"
@@ -99,14 +100,15 @@ int convergent (board b) {
     return 1;
 }
 
-void infect (board *current, board *future, int line, int column) {
+cell infect (board *current, board *future, int line, int column) {
+	cell new_cell;
 	int neighbours = 8;
 	float infection_chance = 0;
 	for (int i = -1; i < 2; i++) {
 		for (int j = -1; j < 2; j++) {
-			cell neighbour = current->matrix[(line   + current->lines   + i) % current->lines  ]
-									 		[(column + current->columns + j) % current->columns];
-			switch (neighbour.state) {
+			cell* neighbour = &current->matrix[(line   + current->lines   + i) % current->lines  ]
+									 		  [(column + current->columns + j) % current->columns];
+			switch (neighbour->state) {
 				case 1:
                     infection_chance += randnormal(80, (20/3));
                     break;
@@ -145,16 +147,17 @@ void infect (board *current, board *future, int line, int column) {
 	infection_chance /= neighbours;
 	float r = roundf(randuniform(0, 100));
 	if (infection_chance > r)
-		cell_fill(&future->matrix[line][column], randnormal(5, (2/3)), 1, 0);
+		cell_fill(&new_cell, randnormal(5, (2/3)), 1, 0);
 	else
-		cell_fill(&future->matrix[line][column], INT_MAX, 0, 0);
+		cell_fill(&new_cell, INT_MAX, 0, 0);
+	return new_cell;
 }
 
 void timestep (board* current, board* future) {
 	for (int l = 0; l < current->lines; l++)
 		for (int c = 0; c < current->columns; c++) {
 			if (current->matrix[l][c].state == 0)
-				infect(current, future, l, c);
+				future->matrix[l][c] = infect(current, future, l, c);
 			else if (++current->matrix[l][c].time > current->matrix[l][c].duration)
 				future->matrix[l][c] = transition(current->matrix[l][c]);
 			else
@@ -166,7 +169,7 @@ cell transition (cell expired_cell)  {
 	cell new_cell;
 	switch (expired_cell.state) {
 		case 1:
-			transition_1(&new_cell);
+			transitiond_1(&new_cell);
 			break;
 		case 2:
 			cell_fill(&new_cell, roundf(randnormal(15, 2)), 8, 0);

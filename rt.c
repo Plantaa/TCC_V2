@@ -11,9 +11,10 @@ void rt_calculate (rt *infection_rate) {
         }
         infection_rate->infected[i] /= infection_rate->quantity[i];
     }
-    for (int j = 0; j < i; j++)
-        infection_rate->infected[j] =
+    for (int j = 0; j < i; j++) {
+		infection_rate->infected[j] =
 			(infection_rate->infected[j+1]/infection_rate->infected[j]);
+	}
 	infection_rate->furthest_timestep = i;
 }
 

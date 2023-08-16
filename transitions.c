@@ -1,5 +1,6 @@
 #include <math.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #include "random.h"
 #include "transitions.h"
@@ -7,7 +8,7 @@
 
 void transition_1 (cell* c) {
 	double r = roundf(randuniform(0, 100));
-	double tps[4] = {randnormal(55, 3), randnormal(30, 3), randnormal(10, 3), randnormal(5, 3)};
+	double tps[4] = {randnormal(55, 3), randnormal(5, 3), randnormal(10, 3), randnormal(30, 3)};
 	normalize(tps, 4);
 	if (tps[0] >= r) {
 		cell_fill(c, roundf(randnormal(5, 3)), 2, 0);
