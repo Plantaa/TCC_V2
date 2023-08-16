@@ -4,7 +4,7 @@
 #include "cell.h"
 
 void transition_1 (cell* c);
-void transitiond_1 (cell* c)
+void transitiond_1 (cell* c);
 void transition_5 (cell* c);
 void transition_6 (cell* c);
 
