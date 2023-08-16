@@ -5,7 +5,7 @@
 #define M_PI 3.14159265358979323846
 
 double randuniform(double min, double max){
-    double rand_double = (double)rand() / ((double)RAND_MAX+1);
+    double rand_double = (double)rand() / ((double)RAND_MAX);
     double rand_uniform = rand_double * (max - min) + min;
     return rand_uniform;
 }

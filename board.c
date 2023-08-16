@@ -22,22 +22,22 @@ void board_free (board b) {
 	free(b.matrix);
 }
 
-void board_init (board b, int infected, int imune) {
-	int population = b.lines*b.columns;
-	int pc_infected = infected*(population/100);
-	int pc_imune = imune*(population/100);
+void board_init (board b, int pc_infected, int pc_imune) {
+	int population   = b.lines*b.columns;
+	int abs_infected = pc_infected*(population/100);
+	int abs_imune    = pc_imune*(population/100);
 	board_zero(b);
 	int l, c;
-	for (int i = 0; i < pc_infected; i++) {
-		l = randuniform(0, b.lines);
-		c = randuniform(0, b.columns);
+	for (int i = 0; i < abs_infected; i++) {
+		l = roundf(randuniform(0, b.lines  -1));
+		c = roundf(randuniform(0, b.columns-1));
 		if (b.matrix[l][c].state == 0) 
 			cell_fill(&b.matrix[l][c], roundf(randnormal(5, (2/3))), 1, 0);
 		else i--;
 	}
-	for (int i = 0; i < pc_imune; i++) {
-		l = randuniform(0, b.lines);
-		c = randuniform(0, b.columns);
+	for (int i = 0; i < abs_imune; i++) {
+		l = roundf(randuniform(0, b.lines  -1));
+		c = roundf(randuniform(0, b.columns-1));
 		if (b.matrix[l][c].state == 0)
 			cell_fill(&b.matrix[l][c], INT_MAX, 12, 0);
 		else i--;
@@ -104,49 +104,39 @@ void infect (board *current, board *future, int line, int column) {
 	float infection_chance = 0;
 	for (int i = -1; i < 2; i++) {
 		for (int j = -1; j < 2; j++) {
-			cell neighbour = current->matrix[(line + current->lines + i) % current->lines]
+			cell neighbour = current->matrix[(line   + current->lines   + i) % current->lines  ]
 									 		[(column + current->columns + j) % current->columns];
 			switch (neighbour.state) {
 				case 1:
                     infection_chance += randnormal(80, (20/3));
                     break;
-
                 case 2:
                     infection_chance += randnormal(80, (20/3));
                     break;
-
                 case 3:
                     infection_chance += randnormal(80, (20/3));
                     break;
-
                 case 4:
                     infection_chance += randnormal(80, (20/3));
                     break;
-
                 case 5:
                     infection_chance += randnormal(20, (20/3));
                     break;
-
                 case 6:
                     infection_chance += randnormal(20, (20/3));
                     break;
-
                 case 7:
                     infection_chance += randnormal(80, (20/3));
                     break;
-
                 case 8:
                     infection_chance += randnormal(80, (20/3));
                     break;
-
                 case 9:
                     infection_chance += randnormal(80, (20/3));
                     break;
-
                 case 10:
                     infection_chance += randnormal(80, (20/3));
                     break;
-
                 default:
                     break;
 			}
