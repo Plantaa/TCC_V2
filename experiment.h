@@ -5,7 +5,7 @@
 #include "result.h"
 
 typedef struct Experiment {
-	board boards[2];
+	board* boardps[2];
 	result r;
 	double infected;
 	double imune;

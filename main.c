@@ -7,8 +7,8 @@
 
 #define INI_INF 10
 #define SAMPLES 10
-#define LINES 100
-#define COLUMNS 100
+#define LINES 1000
+#define COLUMNS 1000
 #define TIMESTEPS 16364
 #define max(a,b) (((a) > (b)) ? (a) : (b))
 
@@ -32,17 +32,17 @@ int main (void) {
 		for (s = 0; s < SAMPLES; s++) {
 			peak_infected = 0;
 			for (t = 0; t < TIMESTEPS; t++) {
-				current_board = &e.boards[t%2];
-				future_board  = &e.boards[(t+1)%2];
-				curr_infected = count_infected(*current_board);
+				current_board = e.boardps[t%2];
+				future_board  = e.boardps[(t+1)%2];
+				curr_infected = count_infected(current_board);
 				peak_infected = max(peak_infected, curr_infected);
 				e.r.infection_rate.infected[t] += curr_infected;
 				e.r.infection_rate.quantity[t] ++;
 				timestep(current_board, future_board);
-				if(convergent(*future_board)) break;
+				if(convergent(future_board)) break;
 			}
-			e.r.succeptibles  += count_succeptible(*future_board);
-			e.r.deceased 	  += count_deceased   (*future_board);
+			e.r.succeptibles  += count_succeptible(future_board);
+			e.r.deceased 	  += count_deceased   (future_board);
 			e.r.peak_infected += peak_infected;
 			e.r.convergence   += t;
 			srand(time(0));

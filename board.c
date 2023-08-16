@@ -7,100 +7,100 @@
 #include "random.h"
 #include "transitions.h"
 
-board board_create (int lines, int columns) {
-	board b;
-	b.lines = lines;
-	b.columns = columns;
-	b.matrix = calloc(lines, sizeof(cell*));
+board* board_create (int lines, int columns) {
+	board* b = malloc(sizeof(board));
+	b->lines = lines;
+	b->columns = columns;
+	b->matrix = calloc(lines, sizeof(cell*));
 	for (int c = 0; c < columns; c++)
-		b.matrix[c] = calloc(columns, sizeof(cell));
+		b->matrix[c] = calloc(columns, sizeof(cell));
 	return b;
 }
 
-void board_free (board b) {
-	for (int l = 0; l < b.lines; l++)
-		free(b.matrix[l]);
-	free(b.matrix);
-}
+// void board_free (board* b) {
+// 	for (int l = 0; l < b.lines; l++)
+// 		free(b.matrix[l]);
+// 	free(b.matrix);
+// }
 
-void board_init (board b, int pc_infected, int pc_imune) {
-	int population   = b.lines*b.columns;
+void board_init (board* b, int pc_infected, int pc_imune) {
+	int population   = b->lines*b->columns;
 	int abs_infected = pc_infected*(population/100);
 	int abs_imune    = pc_imune*(population/100);
 	board_zero(b);
 	int l, c;
 	for (int i = 0; i < abs_infected; i++) {
-		l = roundf(randuniform(0, b.lines  -1));
-		c = roundf(randuniform(0, b.columns-1));
-		if (b.matrix[l][c].state == 0) 
-			cell_fill(&b.matrix[l][c], roundf(randnormal(5, (2/3))), 1, 0);
+		l = roundf(randuniform(0, b->lines  -1));
+		c = roundf(randuniform(0, b->columns-1));
+		if (b->matrix[l][c].state == 0) 
+			cell_fill(&b->matrix[l][c], roundf(randnormal(5, (2/3))), 1, 0);
 		else i--;
 	}
 	for (int i = 0; i < abs_imune; i++) {
-		l = roundf(randuniform(0, b.lines  -1));
-		c = roundf(randuniform(0, b.columns-1));
-		if (b.matrix[l][c].state == 0)
-			cell_fill(&b.matrix[l][c], INT_MAX, 12, 0);
+		l = roundf(randuniform(0, b->lines  -1));
+		c = roundf(randuniform(0, b->columns-1));
+		if (b->matrix[l][c].state == 0)
+			cell_fill(&b->matrix[l][c], INT_MAX, 12, 0);
 		else i--;
 	}
 }
 
-void board_print (board b) {
-	for (int l = 0; l < b.lines; l++) {
-		for (int c = 0; c < b.columns; c++)
-			printf("%x   ", b.matrix[l][c].state);
+void board_print (board* b) {
+	for (int l = 0; l < b->lines; l++) {
+		for (int c = 0; c < b->columns; c++)
+			printf("%x   ", b->matrix[l][c].state);
 		printf("\n\n");
 	}
 	printf("\n\n");
 }
 
-void board_zero (board b) {
-	for (int l = 0; l < b.lines; l++)
-		for (int c = 0; c < b.columns; c++)
-			b.matrix[l][c].state = b.matrix[l][c].duration = b.matrix[l][c].time = 0;
+void board_zero (board* b) {
+	for (int l = 0; l < b->lines; l++)
+		for (int c = 0; c < b->columns; c++)
+			b->matrix[l][c].state = b->matrix[l][c].duration = b->matrix[l][c].time = 0;
 }
 
-int count_deceased (board b) {
+int count_deceased (board* b) {
 	int deceased = 0;
-	for (int l = 0; l < b.lines; l++)
-		for (int c = 0; c < b.columns; c++)
-			deceased += (b.matrix[l][c].state == 11);
+	for (int l = 0; l < b->lines; l++)
+		for (int c = 0; c < b->columns; c++)
+			deceased += (b->matrix[l][c].state == 11);
 	return deceased;
 }
 
-int count_infected (board b) {
+int count_infected (board* b) {
 	int infected = 0;
-	for (int l = 0; l < b.lines; l++)
-		for (int c = 0; c < b.columns; c++)
-			infected += (b.matrix[l][c].state > 0 && b.matrix[l][c].state < 11);
+	for (int l = 0; l < b->lines; l++)
+		for (int c = 0; c < b->columns; c++)
+			infected += (b->matrix[l][c].state > 0 && b->matrix[l][c].state < 11);
 	return infected;
 }
 
-int count_state (board b, int state) {
-	int count;
-	for (int l = 0; l < b.lines; l++)
-		for (int c = 0; c < b.columns; c++)
-			count += (b.matrix[l][c].state == state);
-	return count;
-}
+// int count_state (board* b, int state) {
+// 	int count;
+// 	for (int l = 0; l < b->lines; l++)
+// 		for (int c = 0; c < b->columns; c++)
+// 			count += (b->matrix[l][c].state == state);
+// 	return count;
+// }
 
-int count_succeptible (board b) {
+int count_succeptible (board* b) {
 	int succeptible = 0;
-	for (int l = 0; l < b.lines; l++)
-		for (int c = 0; c < b.columns; c++)
-			succeptible += (b.matrix[l][c].state == 0);
+	for (int l = 0; l < b->lines; l++)
+		for (int c = 0; c < b->columns; c++)
+			succeptible += (b->matrix[l][c].state == 0);
 	return succeptible;
 }
 
-int convergent (board b) {
-    for(int l = 0; l < b.lines; l++)
-    	for(int c = 0; c < b.columns; c++)
-        	if(b.matrix[l][c].state > 0 && b.matrix[l][c].state < 11)
+int convergent (board* b) {
+    for(int l = 0; l < b->lines; l++)
+    	for(int c = 0; c < b->columns; c++)
+        	if(b->matrix[l][c].state > 0 && b->matrix[l][c].state < 11)
             	return 0;    
     return 1;
 }
 
-cell infect (board *current, board *future, int line, int column) {
+cell infect (board *current, int line, int column) {
 	cell new_cell;
 	int neighbours = 8;
 	float infection_chance = 0;
@@ -157,7 +157,7 @@ void timestep (board* current, board* future) {
 	for (int l = 0; l < current->lines; l++)
 		for (int c = 0; c < current->columns; c++) {
 			if (current->matrix[l][c].state == 0)
-				future->matrix[l][c] = infect(current, future, l, c);
+				future->matrix[l][c] = infect(current, l, c);
 			else if (++current->matrix[l][c].time > current->matrix[l][c].duration)
 				future->matrix[l][c] = transition(current->matrix[l][c]);
 			else
