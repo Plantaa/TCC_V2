@@ -33,6 +33,6 @@ void experiment_print (experiment e) {
 
 void experiment_reset (experiment* e) {
 	board_init(e->boards[0], e->infected, e->imune);
-	board_zero(e->boards[1]);
+//	board_zero(e->boards[1]);
 }
 

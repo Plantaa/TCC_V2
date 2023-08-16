@@ -1,0 +1,55 @@
+# Project: TCC_V2
+# Makefile created by Dev-C++ 5.11
+
+CPP      = g++.exe -D__DEBUG__
+CC       = gcc.exe -D__DEBUG__
+WINDRES  = windres.exe
+OBJ      = cell.o main.o random.o result.o rt.o board.o output_f.o experiment.o utils.o transitions.o
+LINKOBJ  = cell.o main.o random.o result.o rt.o board.o output_f.o experiment.o utils.o transitions.o
+LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib" -L"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/lib" -static-libgcc -g3
+INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include"
+CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include" -I"C:/Program Files (x86)/Dev-Cpp/MinGW64/lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"
+BIN      = TCC_V2.exe
+CXXFLAGS = $(CXXINCS) -g3 -std=c99 -Wall -Wextra -Wpedantic -O1
+CFLAGS   = $(INCS) -g3 -std=c99 -Wall -Wextra -Wpedantic -O1
+RM       = rm.exe -f
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${RM} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+cell.o: cell.c
+	$(CC) -c cell.c -o cell.o $(CFLAGS)
+
+main.o: main.c
+	$(CC) -c main.c -o main.o $(CFLAGS)
+
+random.o: random.c
+	$(CC) -c random.c -o random.o $(CFLAGS)
+
+result.o: result.c
+	$(CC) -c result.c -o result.o $(CFLAGS)
+
+rt.o: rt.c
+	$(CC) -c rt.c -o rt.o $(CFLAGS)
+
+board.o: board.c
+	$(CC) -c board.c -o board.o $(CFLAGS)
+
+output_f.o: output_f.c
+	$(CC) -c output_f.c -o output_f.o $(CFLAGS)
+
+experiment.o: experiment.c
+	$(CC) -c experiment.c -o experiment.o $(CFLAGS)
+
+utils.o: utils.c
+	$(CC) -c utils.c -o utils.o $(CFLAGS)
+
+transitions.o: transitions.c
+	$(CC) -c transitions.c -o transitions.o $(CFLAGS)
