@@ -5,9 +5,9 @@
 #include "transitions.h"
 #include "utils.h"
 
-void transition_1(cell* c) {
+void transition_1 (cell* c) {
 	double r = roundf(randuniform(0, 100));
-	double tps[4] = {randnormal(55, 33), randnormal(30, 3), randnormal(10, 3), randnormal(5, 3)};
+	double tps[4] = {randnormal(55, 3), randnormal(30, 3), randnormal(10, 3), randnormal(5, 3)};
 	normalize(tps, 4);
 	if (tps[0] >= r) {
 		cell_fill(c, roundf(randnormal(5, 3)), 2, 0);
@@ -34,6 +34,23 @@ void transition_1(cell* c) {
 		}	
 		cell_fill(c, roundf(randnormal(4, (2/3))), 3, 0);
 	}
+}
+
+void transitiond_1 (cell* c) {
+	double tps[4] = {randnormal(55, 3), randnormal(30, 3), randnormal(10, 3), randnormal(5, 3)};
+	double sum = tps[0]+tps[1]+tps[2]+tps[3];
+	double r = randuniform(0, sum);
+	tps[1]+=tps[0];
+	tps[2]+=tps[1];
+	tps[3]+=tps[2];
+	if (r < tps[0])
+		cell_fill(c, roundf(randnormal(5, 3)), 2, 0);
+	else if (r < tps[1])
+		cell_fill(c, roundf(randnormal(12, (5/3))), 7, 0);
+	else if (r < tps[2])
+		cell_fill(c, roundf(randnormal(4, (2/3))), 3, 0);
+	else
+		cell_fill(c, roundf(randnormal(3, (1/3))), 4, 0);
 }
 
 void transition_5 (cell* c) {
