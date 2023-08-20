@@ -76,13 +76,13 @@ int count_infected (board* b) {
 	return infected;
 }
 
-// int count_state (board* b, int state) {
-// 	int count;
-// 	for (int l = 0; l < b->lines; l++)
-// 		for (int c = 0; c < b->columns; c++)
-// 			count += (b->matrix[l][c].state == state);
-// 	return count;
-// }
+int count_state (board* b, int state) {
+	int count = 0;
+	for (int l = 0; l < b->lines; l++)
+		for (int c = 0; c < b->columns; c++)
+			count += (b->matrix[l][c].state == state);
+	return count;
+}
 
 int count_succeptible (board* b) {
 	int succeptible = 0;

@@ -16,5 +16,6 @@ void experiment_init (experiment* e, double imune, double infected);
 void experiment_free (experiment* e);
 void experiment_print (experiment e);
 void experiment_reset (experiment* e);
+void* experiment_run (void* info);
 
 #endif
