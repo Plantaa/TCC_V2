@@ -44,14 +44,10 @@ void transitiond_1 (cell* c) {
 	tps[1]+=tps[0];
 	tps[2]+=tps[1];
 	tps[3]+=tps[2];
-	if (r < tps[0])
-		cell_fill(c, roundf(randnormal(5,     3)),  2, 0);
-	else if (r < tps[1])
-		cell_fill(c, roundf(randnormal(12, (5/3))), 7, 0);
-	else if (r < tps[2])
-		cell_fill(c, roundf(randnormal(4,  (2/3))), 3, 0);
-	else
-		cell_fill(c, roundf(randnormal(3,  (1/3))), 4, 0);
+	if (r < tps[0]) 	 cell_fill(c, roundf(randnormal(5,     3)),  2, 0);
+	else if (r < tps[1]) cell_fill(c, roundf(randnormal(12, (5/3))), 7, 0);
+	else if (r < tps[2]) cell_fill(c, roundf(randnormal(4,  (2/3))), 3, 0);
+	else 				 cell_fill(c, roundf(randnormal(3,  (1/3))), 4, 0);
 }
 
 void transition_5 (cell* c) {

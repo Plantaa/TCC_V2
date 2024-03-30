@@ -34,7 +34,7 @@ void rt_free (rt* infection_rate) {
 }
 
 void rt_print (rt infection_rate) {
-	printf("Taxa de infeccao: ");
+	printf("Infecction Rate: ");
 	for (int i  = 0; i < infection_rate.max_timesteps; i++) {
 		printf("%f:%d ", infection_rate.infected[i], infection_rate.quantity[i]);
 	}

@@ -13,8 +13,8 @@ typedef struct ThreadInfo {
 experiment experiment_create (int lines, int columns, int max_timesteps) {
 	experiment e;
 	e.r = result_create(max_timesteps);
-	e.boardps[0] = board_create (lines, columns);
-	e.boardps[1] = board_create (lines, columns);
+	e.boardps[0] = board_create(lines, columns);
+	e.boardps[1] = board_create(lines, columns);
 	return e;
 }
 

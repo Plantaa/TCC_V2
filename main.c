@@ -7,8 +7,8 @@
 
 #define INI_INF 10
 #define SAMPLES 1000
-#define LINES 500
-#define COLUMNS 500
+#define LINES 1000
+#define COLUMNS 1000
 #define TIMESTEPS 16364
 #define max(a,b) (((a) > (b)) ? (a) : (b))
 
